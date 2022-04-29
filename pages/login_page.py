@@ -14,16 +14,13 @@ class LoginPage(BasePage):
 
     def login(self):
 
-        username = self.browser.find_element(*LoginPageLocators.USERNAME)
-        username.send_keys('standard_user')
-        password = self.browser.find_element(*LoginPageLocators.PASSWORD)
-        password.send_keys('secret_sauce')
-        login_button = self.browser.find_element(*LoginPageLocators.LOGIN_BUTTON)
-        login_button.click()
+        self.browser.find_element(*LoginPageLocators.USERNAME).send_keys('standard_user')
+        self.browser.find_element(*LoginPageLocators.PASSWORD).send_keys('secret_sauce')
+        self.browser.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
 
     def get_products_count(self):
-        products_title = self.browser.find_elements(*InventoryPageLocators.PRODUCT_TITLE)
-        products_prices = self.browser.find_elements(*InventoryPageLocators.PRODUCT_PRICE)
-        for (name, price) in zip(products_title, products_prices):
+        products_title_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_TITLE)
+        products_prices_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_PRICE)
+        for (name, price) in zip(products_title_list, products_prices_list):
             logging.info(f'Название продукта: {name.text}, цена: {price.text}')
-        return len(products_title)
+        return len(products_title_list)
