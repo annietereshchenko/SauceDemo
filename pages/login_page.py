@@ -13,7 +13,6 @@ class LoginPage(BasePage):
         super().__init__(browser, url)
 
     def login(self):
-
         self.browser.find_element(*LoginPageLocators.USERNAME).send_keys('standard_user')
         self.browser.find_element(*LoginPageLocators.PASSWORD).send_keys('secret_sauce')
         self.browser.find_element(*LoginPageLocators.LOGIN_BUTTON).click()

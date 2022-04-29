@@ -4,7 +4,6 @@ from pages.login_page import LoginPage
 class TestLogin:
 
     def test_login(self, browser):
-
         page = LoginPage(browser)
         page.open()
         page.login()
