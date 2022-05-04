@@ -6,12 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class DynamicControlsPage(BasePage):
 
-    def __init__(self, browser, url=''):
-        if not url:
-            url = "http://the-internet.herokuapp.com/dynamic_controls"
-
-        super().__init__(browser, url)
-
     def wait_for_visibility_of_element(self, *element):
         WebDriverWait(self.browser, 5).until(
             EC.visibility_of(self.browser.find_element(*element)))

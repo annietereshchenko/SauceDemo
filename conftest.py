@@ -7,6 +7,7 @@ def browser():
     browser = webdriver.Chrome("C:/Users/Admin/PycharmProjects/TMS05_HW/chromedriver")
     browser.maximize_window()
     browser.implicitly_wait(10)
+    browser.get('https://www.saucedemo.com/')
     yield browser
     browser.quit()
 

@@ -6,12 +6,6 @@ import logging
 
 class InventoryPage(BasePage):
 
-    def __init__(self, browser, url=''):
-        if not url:
-            url = "https://www.saucedemo.com/"
-
-        super().__init__(browser, url)
-
     def get_products_count(self):
         products_title_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_TITLE)
         products_prices_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_PRICE)
@@ -40,14 +34,14 @@ class InventoryPage(BasePage):
     def get_count_of_added_products(self):
         return self.browser.find_element(*InventoryPageLocators.COUNT_OF_ADDED_PRODUCTS).text
 
+    def is_shopping_cart_counter_displayed(self):
+        return len(self.browser.find_elements(*InventoryPageLocators.COUNT_OF_ADDED_PRODUCTS))
+
     def is_remove_button_present(self):
         return len(self.browser.find_elements(*InventoryPageLocators.REMOVE_BACKPACK))
 
     def open_cart(self):
         self.browser.find_element(*InventoryPageLocators.CART).click()
-
-    def get_added_product_name(self):
-        return self.browser.find_element(*InventoryPageLocators.PRODUCT_TITLE).text
 
     def remove_product(self):
         self.browser.find_element(*InventoryPageLocators.REMOVE_BACKPACK).click()
@@ -70,3 +64,6 @@ class InventoryPage(BasePage):
             if not product == sorted_product:
                 return False
         return True
+
+    def open_product(self):
+        self.browser.find_element(*InventoryPageLocators.PRODUCT_TITLE).click()

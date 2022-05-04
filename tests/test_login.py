@@ -7,7 +7,6 @@ class TestLogin:
     def test_login(self, browser):
         login_page = LoginPage(browser)
         inventory_page = InventoryPage(browser)
-        login_page.open()
         login_page.login()
-        assert login_page.current_url() == 'https://www.saucedemo.com/inventory.html'
+        assert inventory_page.current_url() == 'https://www.saucedemo.com/inventory.html'
         assert inventory_page.get_products_count() == 6

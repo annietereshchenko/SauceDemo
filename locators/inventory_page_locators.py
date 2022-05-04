@@ -5,6 +5,7 @@ class InventoryPageLocators:
 
     PRODUCT_TITLE = (By.CLASS_NAME, 'inventory_item_name')
     PRODUCT_PRICE = (By.CLASS_NAME, 'inventory_item_price')
+    PRODUCT_DESCRIPTION = (By.CLASS_NAME, 'inventory_item_desc')
     ADD_BACKPACK_TO_CART = (By.ID, 'add-to-cart-sauce-labs-backpack')
     REMOVE_BACKPACK = (By.ID, 'remove-sauce-labs-backpack')
     CART = (By.CLASS_NAME, 'shopping_cart_link')
