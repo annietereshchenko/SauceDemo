@@ -1,25 +1,19 @@
-from pages.base import BasePage
+from pages.base_page import BasePage
 from locators.dynamic_controls_page_locators import DynamicControlsPageLocators
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class DynamicControlsPage(BasePage):
 
-    def wait_for_visibility_of_element(self, *element):
-        WebDriverWait(self.browser, 5).until(
-            EC.visibility_of(self.browser.find_element(*element)))
-
     def remove_checkbox(self):
-        self.browser.find_element(*DynamicControlsPageLocators.REMOVE_BUTTON).click()
-        self.wait_for_visibility_of_element(*DynamicControlsPageLocators.MESSAGE)
+        self.find_element(DynamicControlsPageLocators.REMOVE_BUTTON).click()
+        self.wait_for_visibility_of_element(DynamicControlsPageLocators.MESSAGE)
 
-    def is_element_present(self):
-        return self.browser.find_elements(*DynamicControlsPageLocators.CHECKBOX)
+    def is_checkbox_present(self):
+        return self.is_element_present(*DynamicControlsPageLocators.CHECKBOX)
 
     def is_element_disabled(self):
-        return self.browser.find_element(*DynamicControlsPageLocators.INPUT_FIELD).get_property('disabled')
+        return self.find_element(DynamicControlsPageLocators.INPUT_FIELD).get_property('disabled')
 
-    def click_on_button(self):
-        self.browser.find_element(*DynamicControlsPageLocators.ENABLE_BUTTON).click()
-        self.wait_for_visibility_of_element(*DynamicControlsPageLocators.MESSAGE)
+    def click_on_enable_button(self):
+        self.find_element(DynamicControlsPageLocators.ENABLE_BUTTON).click()
+        self.wait_for_visibility_of_element(DynamicControlsPageLocators.MESSAGE)

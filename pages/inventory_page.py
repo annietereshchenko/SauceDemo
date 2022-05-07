@@ -1,53 +1,53 @@
-from selenium.webdriver.support.select import Select
-from pages.base import BasePage
+from pages.base_page import BasePage
 from locators.inventory_page_locators import InventoryPageLocators
 import logging
 
 
 class InventoryPage(BasePage):
 
-    def get_products_count(self):
-        products_title_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_TITLE)
-        products_prices_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_PRICE)
+    def products_logging(self):
+        products_title_list = self.find_elements(InventoryPageLocators.PRODUCT_TITLE)
+        products_prices_list = self.find_elements(InventoryPageLocators.PRODUCT_PRICE)
         for (name, price) in zip(products_title_list, products_prices_list):
             logging.info(f'Название продукта: {name.text}, цена: {price.text}')
-        return len(products_title_list)
+
+    def get_products_count(self):
+        self.products_logging()
+        return self.get_count_of_elements(InventoryPageLocators.PRODUCT_TITLE)
 
     def get_products_names(self):
-        products_names_list = []
-        products_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_TITLE)
-        for product in products_list:
-            products_names_list.append(product.text)
-        return products_names_list
+        return self.get_text_of_elements(InventoryPageLocators.PRODUCT_TITLE)
 
     def add_product_to_cart(self):
-        self.browser.find_element(*InventoryPageLocators.ADD_BACKPACK_TO_CART).click()
+        self.find_element(InventoryPageLocators.ADD_BACKPACK_TO_CART).click()
 
     def get_products_prices(self):
-        products_prices_list = []
-        products_list = self.browser.find_elements(*InventoryPageLocators.PRODUCT_PRICE)
-        for product in products_list:
-            price = ''.join(filter(lambda c: c.isdigit() or c == '.', product.text))
-            products_prices_list.append(float(price))
-        return products_prices_list
+        cast_products_prices_list = []
+        products_prices_list = self.get_text_of_elements(InventoryPageLocators.PRODUCT_PRICE)
+        for product in products_prices_list:
+            # здесь можно было обойтись replace('$', ''), но вдруг там будут
+            # пробелы, или другая валюта, или еще что-нибудь
+            price = ''.join(filter(lambda c: c.isdigit() or c == '.', product))
+            cast_products_prices_list.append(float(price))
+        return cast_products_prices_list
 
-    def get_count_of_added_products(self):
-        return self.browser.find_element(*InventoryPageLocators.COUNT_OF_ADDED_PRODUCTS).text
+    def get_number_of_shopping_cart_counter(self):
+        return self.get_text_of_element(InventoryPageLocators.COUNT_OF_ADDED_PRODUCTS)
 
     def is_shopping_cart_counter_displayed(self):
-        return len(self.browser.find_elements(*InventoryPageLocators.COUNT_OF_ADDED_PRODUCTS))
+        return self.is_element_present(*InventoryPageLocators.COUNT_OF_ADDED_PRODUCTS)
 
     def is_remove_button_present(self):
-        return len(self.browser.find_elements(*InventoryPageLocators.REMOVE_BACKPACK))
+        return self.is_element_present(*InventoryPageLocators.REMOVE_BACKPACK)
 
     def open_cart(self):
-        self.browser.find_element(*InventoryPageLocators.CART).click()
+        self.find_element(InventoryPageLocators.CART).click()
 
     def remove_product(self):
-        self.browser.find_element(*InventoryPageLocators.REMOVE_BACKPACK).click()
+        self.find_element(InventoryPageLocators.REMOVE_BACKPACK).click()
 
     def select_sorting_type(self, value):
-        Select(self.browser.find_element(*InventoryPageLocators.SORT)).select_by_value(value)
+        self.select(InventoryPageLocators.SORT, value)
 
     def check_names_sorting(self, reverse):
         product_names = self.get_products_names()
@@ -66,4 +66,4 @@ class InventoryPage(BasePage):
         return True
 
     def open_product(self):
-        self.browser.find_element(*InventoryPageLocators.PRODUCT_TITLE).click()
+        self.find_element(InventoryPageLocators.PRODUCT_TITLE).click()

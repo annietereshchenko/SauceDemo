@@ -6,7 +6,7 @@ from selenium import webdriver
 def browser():
     browser = webdriver.Chrome("C:/Users/Admin/PycharmProjects/TMS05_HW/chromedriver")
     browser.maximize_window()
-    browser.implicitly_wait(10)
+    browser.implicitly_wait(5)
     browser.get('https://www.saucedemo.com/')
     yield browser
     browser.quit()
@@ -16,7 +16,7 @@ def browser():
 def browse_dc():
     browser = webdriver.Chrome("C:/Users/Admin/PycharmProjects/TMS05_HW/chromedriver")
     browser.maximize_window()
-    browser.implicitly_wait(10)
+    browser.implicitly_wait(5)
     browser.get('http://the-internet.herokuapp.com/dynamic_controls')
     yield browser
     browser.quit()
