@@ -11,4 +11,3 @@ class TestLogin:
         login_page.enter_password('secret_sauce')
         login_page.click_on_login()
         assert inventory_page.current_url() == 'https://www.saucedemo.com/inventory.html'
-        assert inventory_page.get_products_count() == 6

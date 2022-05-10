@@ -13,9 +13,37 @@ class TestProduct:
         common_logic.login()
         inventory_page.open_product()
         assert product_page.current_url() == 'https://www.saucedemo.com/inventory-item.html?id=4'
+
+    def test_display_product_icon(self, browser):
+        inventory_page = InventoryPage(browser)
+        product_page = ProductPage(browser)
+        common_logic = CommonLogic(browser)
+        common_logic.login()
+        inventory_page.open_product()
         assert product_page.is_product_icon_displayed() == 1
+
+    def test_display_product_title(self, browser):
+        inventory_page = InventoryPage(browser)
+        product_page = ProductPage(browser)
+        common_logic = CommonLogic(browser)
+        common_logic.login()
+        inventory_page.open_product()
         assert product_page.is_product_title_displayed() == 1
+
+    def test_display_product_price(self, browser):
+        inventory_page = InventoryPage(browser)
+        product_page = ProductPage(browser)
+        common_logic = CommonLogic(browser)
+        common_logic.login()
+        inventory_page.open_product()
         assert product_page.is_product_price_displayed() == 1
+
+    def test_display_product_description(self, browser):
+        inventory_page = InventoryPage(browser)
+        product_page = ProductPage(browser)
+        common_logic = CommonLogic(browser)
+        common_logic.login()
+        inventory_page.open_product()
         assert product_page.is_product_description_displayed() == 1
 
     def test_product_title(self, browser):
@@ -38,7 +66,7 @@ class TestProduct:
         product_price_on_product_page = product_page.get_product_price()
         assert product_price_on_inventory_page[0] == product_price_on_product_page
 
-    def test_add_product_to_cart(self, browser):
+    def test_add_product_to_cart_check_counter(self, browser):
         inventory_page = InventoryPage(browser)
         product_page = ProductPage(browser)
         common_logic = CommonLogic(browser)
@@ -46,6 +74,14 @@ class TestProduct:
         inventory_page.open_product()
         product_page.add_product_to_cart()
         assert inventory_page.get_number_of_shopping_cart_counter() == '1'
+
+    def test_add_product_to_cart_display_remove(self, browser):
+        inventory_page = InventoryPage(browser)
+        product_page = ProductPage(browser)
+        common_logic = CommonLogic(browser)
+        common_logic.login()
+        inventory_page.open_product()
+        product_page.add_product_to_cart()
         assert product_page.is_remove_button_present() == 1
 
     def test_added_product_in_cart(self, browser):
@@ -60,7 +96,17 @@ class TestProduct:
         inventory_page.open_cart()
         assert cart_page.get_added_product_name() == product_name
 
-    def test_remove_product(self, browser):
+    def test_remove_product_check_counter(self, browser):
+        inventory_page = InventoryPage(browser)
+        product_page = ProductPage(browser)
+        common_logic = CommonLogic(browser)
+        common_logic.login()
+        inventory_page.open_product()
+        product_page.add_product_to_cart()
+        product_page.remove_product()
+        assert inventory_page.is_shopping_cart_counter_displayed() == 0
+
+    def test_remove_product_check_display_remove(self, browser):
         inventory_page = InventoryPage(browser)
         product_page = ProductPage(browser)
         common_logic = CommonLogic(browser)
@@ -69,7 +115,6 @@ class TestProduct:
         product_page.add_product_to_cart()
         product_page.remove_product()
         assert product_page.is_remove_button_present() == 0
-        assert inventory_page.is_shopping_cart_counter_displayed() == 0
 
     def test_back_to_products(self, browser):
         inventory_page = InventoryPage(browser)
@@ -79,4 +124,3 @@ class TestProduct:
         inventory_page.open_product()
         product_page.back_to_products()
         assert inventory_page.current_url() == 'https://www.saucedemo.com/inventory.html'
-        assert inventory_page.get_products_count() == 6
