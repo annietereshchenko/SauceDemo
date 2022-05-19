@@ -14,7 +14,7 @@ def browser():
 
 @pytest.fixture()
 def browse_dc():
-    browser = webdriver.Chrome("C:/Users/Admin/PycharmProjects/TMS05_HW/chromedriver")
+    browser = webdriver.Chrome("C:/Users/Admin/PycharmProjects/SauceDemo/chromedriver")
     browser.maximize_window()
     browser.implicitly_wait(5)
     browser.get('http://the-internet.herokuapp.com/dynamic_controls')
